@@ -6,10 +6,11 @@
 #include <stack>
 using namespace std;
 
+template <typename T>
 class twoStacksQueue
 {
 public:
-    void Push(int num)
+    void Push(T num)
     {
         stackpush.push(num);
     }
@@ -17,10 +18,7 @@ public:
     void Pop()
     {
         if(stackpush.empty() && stackpop.empty())
-        {
-            cout << "The queue is empty" << endl;
-            return ;
-        }
+            cerr << "The queue is empty" << endl;
         else if(stackpop.empty())
         {
             while(!stackpush.empty())
@@ -32,13 +30,10 @@ public:
         stackpop.pop();
     }
 
-    int Front()
+    T Front()
     {
         if (stackpush.empty() && stackpop.empty())
-        {
-            cout << "The queue is empty" << endl;
-            return 0;
-        }
+            cerr << "The queue is empty" << endl;
         else if (stackpop.empty())
         {
             while(!stackpush.empty())
@@ -50,14 +45,11 @@ public:
         return stackpop.top();
     }
 
-    int Back()
+    T Back()
     {
-        int temp;
+        T temp;
         if (stackpush.empty() && stackpop.empty())
-        {
-            cout << "The queue is empty" << endl;
-            return 0;
-        }
+            cerr << "The queue is empty" << endl;
         else if (stackpush.empty())
         {
             while(!stackpop.empty())
@@ -66,21 +58,16 @@ public:
                 stackpop.pop();
             }
             temp = stackpush.top();
-            while(!stackpush.empty())
-            {
-                stackpop.push(stackpush.top());
-                stackpush.pop();
-            }
             return temp;
         }
         return stackpush.top();
     }
 
-    int Size()
+    unsigned long Size()
     {
         if (stackpush.empty() && stackpop.empty())
         {
-            cout << "The queue is empty" << endl;
+            cerr << "The queue is empty" << endl;
             return 0;
         }
         return stackpush.size() + stackpop.size();
@@ -98,17 +85,16 @@ private:
 int main()
 {
     int a[] = {5,4,3,2,1,2,3,4,5,5,4,4,3,3,2,1,2,1,1};
-    twoStacksQueue stack1;
-    int i;
-    int e;
-    e = sizeof(a)/ sizeof(a[0]);
-    for (i = 0; i < e; i++) {
+    twoStacksQueue<int> stack1;
+    int len;
+    len = sizeof(a)/ sizeof(a[0]);
+    for (int i = 0; i < len; i++)
         stack1.Push(a[i]);
-    }
-    while (!stack1.Empty())  {
+    while (!stack1.Empty())
+    {
         cout << "头元素是：" << stack1.Front() << "*****尾元素是：" << stack1.Back() << endl;
         cout << "队列元素个数：" <<stack1.Size() << endl;
         stack1.Pop();
     }
     return 0;
-};
+}
