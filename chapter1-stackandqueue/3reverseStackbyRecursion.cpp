@@ -1,6 +1,6 @@
 //
 //仅用递归和栈 逆序一个栈
-//
+//这道题比较难想
 #include <iostream>
 #include <stack>
 using namespace std;
@@ -29,26 +29,25 @@ void reverseStack(stack<int> &s)
 
 int main()
 {
-    stack<int> st;
-    st.push(1);
-    st.push(2);
-    st.push(3);
-    st.push(4);
-    st.push(5);
-    for (int i = 0; i < 5; i++) {
-        cout << st.top() << endl;
-        st.pop();
+    stack<int> st1;
+    stack<int> st2;
+    st1.push(1);
+    st1.push(2);
+    st1.push(3);
+    st1.push(4);
+    st1.push(5);
+    st2 = st1;
+    for (int i = 0; i < 5; i++)
+    {
+        cout << st1.top() << endl;
+        st1.pop();
     }
     cout<<"after reverse:\n";
-    st.push(1);
-    st.push(2);
-    st.push(3);
-    st.push(4);
-    st.push(5);
-    reverseStack(st);
-    for (int i = 0; i < 5; i++) {
-        cout << st.top() << endl;
-        st.pop();
+    reverseStack(st2);
+    for (int i = 0; i < 5; i++)
+    {
+        cout << st2.top() << endl;
+        st2.pop();
     }
     return 0;
 }
