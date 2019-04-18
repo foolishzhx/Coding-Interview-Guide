@@ -6,7 +6,7 @@
 #include <string>
 
 //解决办法1，使用递归，并且从左、右两个柱之间可以直接移动
-void recursion_1(int n, int& count, std::string left, std::string middle, std::string right)
+void recursion_1(int n, int &count, std::string left, std::string middle, std::string right)
 {
 	if (n == 1)
 	{
@@ -24,7 +24,7 @@ void recursion_1(int n, int& count, std::string left, std::string middle, std::s
 }
 
 //解决办法2，使用递归，并且从左、右两个柱之间不能直接移动，需要经过中间柱
-void recursion_2(int n, std::string count, std::string left, std::string middle, std::string right)
+void recursion_2(int n, int &count, std::string left, std::string middle, std::string right)
 {
 	if (n == 1)
 	{
