@@ -54,7 +54,6 @@ void hanoProblem(int n)
 	std::string right = "右";
 	//recursion_1(n, count, left, middle, right);
 	recursion_2(n, count, left, middle, right);
-	std::cout << "总步数：" << count << std::endl;
 }
 
 int main(int argc, char** argv)
