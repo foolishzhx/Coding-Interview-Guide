@@ -18,8 +18,8 @@ void recursion_1(int n, int &count, std::string left, std::string middle, std::s
 	{
 		recursion_1(n-1, count, left, right, middle);
 		std::cout << "移动 " << n << " 从 " << left << " 到 " << right << '\n';
-		recursion_1(n-1, count, middle, left, right);
 		count++;
+		recursion_1(n-1, count, middle, left, right);
 	}
 }
 
