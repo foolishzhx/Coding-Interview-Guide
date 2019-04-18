@@ -1,3 +1,6 @@
+//2019.4.18
+//汉诺塔变种问题
+//利用堆栈实现 只能在相邻柱之间挪动
 #include <iostream>
 #include <stack>
 #include <string>
