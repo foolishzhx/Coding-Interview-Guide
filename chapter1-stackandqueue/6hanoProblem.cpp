@@ -43,7 +43,6 @@ void recursion_2(int n, int &count, std::string left, std::string middle, std::s
 		std::cout << "第 " << count+1  << " 步：" << "移动 " << n << " 从 " << middle << " 到 " << right << '\n'; 
 		count++;
 		recursion_2(n-1, count, left, middle, right);
-		count++;
 	}
 }
 
