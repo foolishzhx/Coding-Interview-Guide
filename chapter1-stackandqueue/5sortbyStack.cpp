@@ -4,25 +4,25 @@
 #include <iostream>
 #include <stack>
 using namespace std;
-stack<int> sortStackByStack(stack<int> st)
+stack<int> sortStackByStack(stack<int> &st)
 {
-    stack<int> *help = new stack<int>;
+    stack<int> help = new stack<int>;
     while(!st.empty())
     {
         int cur = st.top();
         st.pop();
-        while(!help->empty() && help->top() < cur)
+        while(!help.empty() && help.top() < cur)
         {
-            st.push(help->top());
-            help->pop();
+            st.push(help.top());
+            help.pop();
         }
-        help->push(cur);
+        help.push(cur);
     }
 
-    while (!help->empty())
+    while (!help.empty())
     {
-        st.push(help->top());
-        help->pop();
+        st.push(help.top());
+        help.pop();
     }
     help = NULL;
     delete help;
