@@ -28,18 +28,20 @@ void recursion_2(int n, int &count, std::string left, std::string middle, std::s
 {
 	if (n == 1)
 	{
-		std::cout << "移动 " << n << " 从 " << left << " 到 " << middle << '\n'; 
+		std::cout << "第 " << count+1  << " 步：" << "移动 " << n << " 从 " << left << " 到 " << middle << '\n'; 
 		count++;
-		std::cout << "移动 " << n << " 从 " << middle << " 到 " << right << '\n'; 
+		std::cout << "第 " << count+1  << " 步：" << "移动 " << n << " 从 " << middle << " 到 " << right << '\n'; 
 		count++;
 		return;
 	}
 	else
 	{
 		recursion_2(n-1, count, left, middle, right);
-		std::cout << "移动 " << n << " 从 " << left << " 到 " << middle << '\n';
+		std::cout << "第 " << count+1  << " 步：" << "移动 " << n << " 从 " << left << " 到 " << middle << '\n';
+		count++;
 		recursion_2(n-1, count, right, middle, left);
-		std::cout << "移动 " << n << " 从 " << middle << " 到 " << right << '\n'; 
+		std::cout << "第 " << count+1  << " 步：" << "移动 " << n << " 从 " << middle << " 到 " << right << '\n'; 
+		count++;
 		recursion_2(n-1, count, left, middle, right);
 		count++;
 	}
