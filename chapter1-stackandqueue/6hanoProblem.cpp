@@ -10,14 +10,14 @@ void recursion_1(int n, int &count, std::string left, std::string middle, std::s
 {
 	if (n == 1)
 	{
-		std::cout << "第 " << count+1  << " 步：" << "移动 " << n << " 从 " << left << " 到 " << right << '\n'; 
+		std::cout << "第 " << count+1  << " 步：移动 " << n << " 从 " << left << " 到 " << right << '\n'; 
 		count++;
 		return;
 	}
 	else
 	{
 		recursion_1(n-1, count, left, right, middle);
-		std::cout << "第 " << count+1  << " 步：" << "移动 " << n << " 从 " << left << " 到 " << right << '\n';
+		std::cout << "第 " << count+1  << " 步：移动 " << n << " 从 " << left << " 到 " << right << '\n';
 		count++;
 		recursion_1(n-1, count, middle, left, right);
 	}
@@ -28,19 +28,19 @@ void recursion_2(int n, int &count, std::string left, std::string middle, std::s
 {
 	if (n == 1)
 	{
-		std::cout << "第 " << count+1  << " 步：" << "移动 " << n << " 从 " << left << " 到 " << middle << '\n'; 
+		std::cout << "第 " << count+1  << " 步：移动 " << n << " 从 " << left << " 到 " << middle << '\n'; 
 		count++;
-		std::cout << "第 " << count+1  << " 步：" << "移动 " << n << " 从 " << middle << " 到 " << right << '\n'; 
+		std::cout << "第 " << count+1  << " 步：移动 " << n << " 从 " << middle << " 到 " << right << '\n'; 
 		count++;
 		return;
 	}
 	else
 	{
 		recursion_2(n-1, count, left, middle, right);
-		std::cout << "第 " << count+1  << " 步：" << "移动 " << n << " 从 " << left << " 到 " << middle << '\n';
+		std::cout << "第 " << count+1  << " 步：移动 " << n << " 从 " << left << " 到 " << middle << '\n';
 		count++;
 		recursion_2(n-1, count, right, middle, left);
-		std::cout << "第 " << count+1  << " 步：" << "移动 " << n << " 从 " << middle << " 到 " << right << '\n'; 
+		std::cout << "第 " << count+1  << " 步：移动 " << n << " 从 " << middle << " 到 " << right << '\n'; 
 		count++;
 		recursion_2(n-1, count, left, middle, right);
 	}
@@ -56,10 +56,103 @@ void hanoProblem(int n)
 	recursion_2(n, count, left, middle, right);
 }
 
+//解决办法3，使用堆栈，非递归，并且相邻柱之间移动，不能跨柱
+enum action{
+	NoAction,
+	LtoM,
+	MtoL,
+	MtoR,
+	RtoM
+};
+
+action checkValidAction(std::stack<int> &left, std::stack<int> &middle, std::stack<int> &right, action preAction)
+{
+	action curAction;
+	switch (preAction){
+	case LtoM:
+		if (right.empty() || middle.top() < right.top())
+			curAction = MtoR;
+		else
+			curAction = RtoM;
+		break;
+	
+	case MtoL:
+		if (!middle.empty() && (right.empty() || middle.top() < right.top()))
+			curAction = MtoR;	
+		else
+			curAction = RtoM;
+		break;
+	
+	case MtoR:
+		if (!middle.empty() && (left.empty() || middle.top() < left.top()))
+			curAction = MtoL;
+		else
+			curAction = LtoM;
+		break;
+
+	default:
+		if (left.empty() || middle.top() < left.top())
+			curAction = MtoL;
+		else
+			curAction = LtoM;
+		break;
+	}
+	return curAction;
+}
+
+void hanoProblemWithStack(int n)
+{
+	std::stack<int>	left;
+	for (int i = n; i > 0; --i)
+		left.push(i);
+	std::stack<int> middle;
+	std::stack<int> right;
+	action preAction;
+	action curAction = LtoM;	
+	int count = 0;
+	while (1)
+	{		
+		switch (curAction){
+		case LtoM:
+			std::cout << "第 " << count+1 << " 步：移动 " << left.top() << " 从左到中\n";
+			middle.push(left.top());
+			left.pop();
+			count++;
+			break;
+		case MtoL:
+			std::cout << "第 " << count+1 << " 步：移动 " << middle.top() << " 从中到左\n";
+			left.push(middle.top());
+			middle.pop();
+			count++;
+			break;
+		case MtoR:
+			std::cout << "第 " << count+1 << " 步：移动 " << middle.top() << " 从中到右\n";
+			right.push(middle.top());
+			middle.pop();
+			count++;
+			break;
+		default:
+			std::cout << "第 " << count+1 << " 步：移动 " << right.top() << " 从右到中\n";
+			middle.push(right.top());
+			right.pop();
+			count++;
+			break;
+		}
+		preAction = curAction;
+		curAction = checkValidAction(left, middle, right, preAction);
+		if (left.empty() && middle.empty() && right.size() == n)
+			break;
+	}	
+}
+
 int main(int argc, char** argv)
 {
 	if (argc != 2)
+	{
 		std::cout << "未输入汉诺塔的高度（int），请重新输入！！\n";
-	hanoProblem(*(argv[1])-'0');
-	return 0;
+		return 0;
+	}
+	hanoProblem(*argv[1] - '0');
+	//hanoProblmeWithStack(*argv[1] - '0');
+	return 1;
 }
