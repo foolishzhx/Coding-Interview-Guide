@@ -57,6 +57,7 @@ void hanoProblem(int n)
 }
 
 //解决办法3，使用堆栈，非递归，并且相邻柱之间移动，不能跨柱
+//借用了左老师的思路，合法的移动行为是大片上放小片以及不能与上一动作互为逆动作
 enum action{
 	NoAction,
 	LtoM,
