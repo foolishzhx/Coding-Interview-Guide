@@ -2,46 +2,40 @@
 //生成窗口最大数值
 //
 #include <iostream>
-#include <stdio.h>
 #include <deque>
+#include <vector>
 
 using namespace std;
 
-int *getMaxWindow(int arr[], int len, int w)
+vector<int> getMaxWindow(vector<int> &arr, int w)
 {
-    deque<int>* qmax = new deque<int>();//双向队列
-    int *rst = new int[len - w + 1];
-    int index = 0;
-    if(len == 0 || len < w || w <1)
-        return 0;
-    for (int i = 0; i < len ; i++) {
+    deque<int> *qmax = new deque<int>;//双向队列
+    size_t len = arr.size();
+    vector<int> rst;
+    rst.reserve(len - w + 1);
+    if(len == 0 || len < w || w <1) {
+        cerr << "数据有问题！！";
+        return rst;
+    }
+    for (int i = 0; i < len ; i++)
+    {
         while(!qmax->empty() && arr[qmax->back()] <= arr[i])
-        {
             qmax->pop_back();
-        }
         qmax->push_back(i);
         if(qmax->front() == i-w)
             qmax->pop_front();
-        if(i>=w-1)
-            rst[index++] = arr[qmax->front()];
+        if(i >= w-1)
+            rst.push_back(arr[qmax->front()]);
     }
-    qmax = NULL;
-    delete qmax;
     return rst;
 }
 
-int main()
+int main(int argc, char** argv)
 {
-    int arr[] = { 4, 3, 5, 4, 3, 3, 6, 7 };
-    int w = 3;
-    int len = sizeof(arr)/ sizeof(int);
-    int len2 = len - w + 1;
-    int* p = getMaxWindow(arr, len, w);
-    for (int i = 0; i < len2; i++)
-    {
-        cout << p[i] << endl;
-    }
-    p = NULL;
-    delete p;
+    vector<int> arr = {1,2,3,4,5,6,7,6,2,3,4,1,5,6,3,8};
+    vector<int> rst = getMaxWindow(arr, *argv[1] - '0');
+    for(auto iter = rst.begin(); iter != rst.end(); ++iter)
+        cout << *iter << " ";
+    cout << endl;
     return 0;
 }
