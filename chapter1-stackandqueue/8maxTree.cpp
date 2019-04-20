@@ -10,7 +10,7 @@ using namespace std;
 
 vector<int> getMaxTree(vector<int> arr)//将原始数组处理，生成父子关系结果，用下标记录
 {
-	int len = arr.size();
+    size_t len = arr.size();
     vector<int> rst(len, -1);
     stack<int> st;
     for (int i =0; i < len ; i++)
@@ -31,26 +31,26 @@ vector<int> getMaxTree(vector<int> arr)//将原始数组处理，生成父子关
 BiTree* setMaxTree(vector<int> arr)//返回的是根节点，即head节点
 {
     BiTree* head = nullptr;
-	vector<BiTree> MaxTree;
-	vector<int> rst = getMaxTree(arr);
+    vector<BiTree> MaxTree(arr.size(), BiTree());
+    vector<int> rst = getMaxTree(arr);
     if(rst.empty())
         cout << "数组为空，请重新输入！";
     for (int i = 0; i < arr.size(); i++)
     {
-		if (MaxTree[i].getValue() == NULL)
-			MaxTree[i].setValue(arr[i]);
+        if (MaxTree[i].getValue() == NULL)
+            MaxTree[i].setValue(arr[i]);
         if (rst[i] != -1)
         {
-            if (MaxTree[rst[i]].getLchild() == NULL)
-                MaxTree[arr[rst[i]]].setLchild(&MaxTree[i]);
-            else if (MaxTree[arr[rst[i]]].getLchild()->getValue() > arr[i])
+            if (MaxTree[rst[i]].getLchild() == nullptr)
+                MaxTree[rst[i]].setLchild(&MaxTree[i]);
+            else if (MaxTree[rst[i]].getLchild()->getValue() > arr[i])
             {
-                BiTree* tmp = MaxTree[arr[rst[i]]].getLchild();
-                MaxTree[arr[rst[i]]].setLchild(&MaxTree[i]);
-                MaxTree[arr[rst[i]]].setRchild(tmp);
+                BiTree* tmp = MaxTree[rst[i]].getLchild();
+                MaxTree[rst[i]].setLchild(&MaxTree[i]);
+                MaxTree[rst[i]].setRchild(tmp);
             }
             else
-                MaxTree[arr[rst[i]]].setRchild(&MaxTree[i]);
+                MaxTree[rst[i]].setRchild(&MaxTree[i]);
         }
         else
             head = &MaxTree[i];
@@ -60,7 +60,8 @@ BiTree* setMaxTree(vector<int> arr)//返回的是根节点，即head节点
 
 int main()
 {
-    vector<int> arr = {1,3,9,2,5,8,7,6,4};    
+    vector<int> arr = {1,3,9,2,5,8,7,6,4};
+    stack<int> st ;
     BiTree *head = setMaxTree(arr);
 
     return 0;
