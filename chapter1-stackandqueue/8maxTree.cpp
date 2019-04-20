@@ -1,14 +1,14 @@
 //
 //构造数组的MaxTree
-//
+//不重复的数组，数组元素个数,时间复杂度Ｏ（ｎ），空间复杂度Ｏ（ｎ）
 #include <iostream>
-#include <stdio.h>
 #include <vector>
 #include <stack>
+#include "BiTree.h"
 
 using namespace std;
 
-vector<int> getMaxTree(int arr[], int n)//不重复的数组，数组元素个数,时间复杂度Ｏ（ｎ），空间复杂度Ｏ（ｎ）
+vector<int> getMaxTree(int arr[], int n)
 {
     vector<int> res(n, -1);
     stack<int> st;
@@ -30,43 +30,7 @@ vector<int> getMaxTree(int arr[], int n)//不重复的数组，数组元素个�
     return res;
 }
 
-class TreeNode
-{
-public:
-    int value;
-    TreeNode *lchild;
-    TreeNode *rchild;
-public:
-    TreeNode():value(0),lchild(NULL),rchild(NULL){};
-
-    int getValue()
-    {
-        return this->value;
-    }
-    TreeNode *getLchild()
-    {
-        return this->lchild;
-    }
-    TreeNode *getRchild()
-    {
-        return this->rchild;
-    }
-    void setValue(int n)
-    {
-        this->value = n;
-    }
-    void setLchild(TreeNode *node)
-    {
-        this->lchild = node;
-    }
-    void setRchild(TreeNode *node)
-    {
-        this->rchild = node;
-    }
-};
-
-
-TreeNode* buildTreeNode(vector<int> res, int arr[], int n)//返回的是根节点，即head节点
+BiTree* buildTreeNode(vector<int> res, int arr[], int n)//返回的是根节点，即head节点
 {
     if(res.empty())
         cout << "数组为空，请重新输入！!";
@@ -105,24 +69,6 @@ TreeNode* buildTreeNode(vector<int> res, int arr[], int n)//返回的是根节�
 
 int main()
 {
-    int length;
-    int arr[] = {2,1,4,3,5,8,7,6};
-    length = sizeof(arr) / sizeof(arr[0]);
-    TreeNode *head;
-    int i;
-    cout << "原数组arr: " << endl;
-    for (i = 0; i < length ; i++)
-    {
-        cout << arr[i] <<"  ";
-    }
-    vector<int> root = getMaxTree(arr, length);
-
-    cout <<endl << "MaxTree的根是: " << endl;
-    for (i =0 ; i < length ; i++)
-    {
-        cout << root[i] << "  ";
-    }
-    cout << endl;
-    head = buildTreeNode(root, arr, length);
+    
     return 0;
 }
