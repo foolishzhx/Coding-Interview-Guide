@@ -63,6 +63,5 @@ int main()
     vector<int> arr = {1,3,9,2,5,8,7,6,4};
     stack<int> st ;
     BiTree *head = setMaxTree(arr);
-
     return 0;
 }
