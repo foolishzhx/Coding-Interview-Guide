@@ -8,67 +8,60 @@
 
 using namespace std;
 
-vector<int> getMaxTree(int arr[], int n)
+vector<int> getMaxTree(vector<int> arr)//将原始数组处理，生成父子关系结果，用下标记录
 {
-    vector<int> res(n, -1);
+	int len = arr.size();
+    vector<int> rst(len, -1);
     stack<int> st;
-    for (int i =0; i < n ; i++)
+    for (int i =0; i < len ; i++)
     {
         while(!st.empty() && arr[i] > arr[st.top()])
         {
-            if (arr[i] < arr[res[st.top()]] || res[st.top()] == -1)
-                res[st.top()] = i;
+            if (arr[i] < arr[rst[st.top()]] || rst[st.top()] == -1)
+                rst[st.top()] = i;
             st.pop();
-
         }
         if (!st.empty())
-        {
-            res[i] = st.top();
-        }
+            rst[i] = st.top();
         st.push(i);
     }
-    return res;
+    return rst;
 }
 
-BiTree* buildTreeNode(vector<int> res, int arr[], int n)//返回的是根节点，即head节点
+BiTree* setMaxTree(vector<int> arr)//返回的是根节点，即head节点
 {
-    if(res.empty())
-        cout << "数组为空，请重新输入！!";
-    TreeNode *head = NULL;
-    vector<TreeNode> Node(n);
-
-    for (int i = 0; i < n; i++)
+    BiTree* head = nullptr;
+	vector<BiTree> MaxTree;
+	vector<int> rst = getMaxTree(arr);
+    if(rst.empty())
+        cout << "数组为空，请重新输入！";
+    for (int i = 0; i < arr.size(); i++)
     {
-        if (Node[arr[i]-1].getValue() == 0)//节点位置从０开始计数，即位置０存储节点１
+		if (MaxTree[i].getValue() == NULL)
+			MaxTree[i].setValue(arr[i]);
+        if (rst[i] != -1)
         {
-            Node[arr[i]-1].setValue(arr[i]);
-        }
-        if (res[i] != -1)
-        {
-            if (Node[arr[res[i]] - 1].getLchild() == NULL)
+            if (MaxTree[rst[i]].getLchild() == NULL)
+                MaxTree[arr[rst[i]]].setLchild(&MaxTree[i]);
+            else if (MaxTree[arr[rst[i]]].getLchild()->getValue() > arr[i])
             {
-                Node[arr[res[i]] - 1].setLchild(&Node[arr[i] - 1]);
-            }
-            else if (Node[arr[res[i]] - 1].getLchild()->getValue() > arr[i])
-            {
-                int tmp = Node[arr[res[i]] - 1].getLchild()->getValue();
-                Node[arr[res[i]] - 1].setLchild(&Node[arr[i] - 1]);
-                Node[arr[res[i]] - 1].setRchild(&Node[tmp - 1]);
+                BiTree* tmp = MaxTree[arr[rst[i]]].getLchild();
+                MaxTree[arr[rst[i]]].setLchild(&MaxTree[i]);
+                MaxTree[arr[rst[i]]].setRchild(tmp);
             }
             else
-                Node[arr[res[i]] - 1].setRchild(&Node[arr[i] - 1]);
+                MaxTree[arr[rst[i]]].setRchild(&MaxTree[i]);
         }
         else
-        {
-            head = &Node[arr[i]-1];
-        }
-
+            head = &MaxTree[i];
     }
     return head;
 }
 
 int main()
 {
-    
+    vector<int> arr = {1,3,9,2,5,8,7,6,4};    
+    BiTree *head = setMaxTree(arr);
+
     return 0;
 }
