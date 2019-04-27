@@ -153,7 +153,7 @@ int main(int argc, char** argv)
 		std::cout << "未输入汉诺塔的高度（int），请重新输入！！\n";
 		return 0;
 	}
-	hanoProblem(*argv[1] - '0');
-	//hanoProblmeWithStack(*argv[1] - '0');
+	hanoProblem(atoi(argv[1]));
+	//hanoProblmeWithStack(atoi(argv[1]));
 	return 1;
 }
