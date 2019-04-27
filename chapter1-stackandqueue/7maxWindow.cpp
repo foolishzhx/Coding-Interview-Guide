@@ -33,7 +33,7 @@ vector<int> getMaxWindow(vector<int> &arr, int w)
 int main(int argc, char** argv)
 {
     vector<int> arr = {1,2,3,4,5,6,7,6,2,3,4,1,5,6,3,8};
-    vector<int> rst = getMaxWindow(arr, *argv[1] - '0');
+    vector<int> rst = getMaxWindow(arr, atoi(argv[1]));
     for(auto iter = rst.begin(); iter != rst.end(); ++iter)
         cout << *iter << " ";
     cout << endl;
